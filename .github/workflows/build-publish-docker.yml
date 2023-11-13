@@ -13,6 +13,10 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%d')"
+
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
@@ -24,7 +28,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository }}:${{ env.TAG }} .
+        run: docker build -t ghcr.io/${{ github.repository }}:${{ steps.date.outputs.date }} .
 
       #- name: Push Docker image
-      #  run: docker push ghcr.io/${{ github.repository }}:${{ env.tag }}
+      #  run: docker push ghcr.io/${{ github.repository }}:${{ steps.date.outputs.date }}
