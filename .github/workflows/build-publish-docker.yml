@@ -1,16 +1,14 @@
-name: Docker CI
-
-on:
-  push:
-    branches: [ main, dev ]
-  workflow_dispatch:
+name: Build and push Docker image
 
 env:
     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     TAG: ${{ steps.date.outputs.date }}
 
-
+on:
+  push:
+    branches: [ main, dev ]
+  workflow_dispatch:
 
 jobs:
   build:
