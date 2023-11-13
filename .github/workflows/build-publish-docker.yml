@@ -16,9 +16,10 @@ jobs:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - run: echo $TAG
       - name: Check out the repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - run: echo $TAG
 
       - name: Log in to Docker Hub
         uses: docker/login-action
