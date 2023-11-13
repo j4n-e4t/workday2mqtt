@@ -1,5 +1,8 @@
 # workday2mqtt
 
+workday2mqtt publishes the state "workday" to an MQTT server. It works the same as the HomeAsssistant extension [workday](https://www.home-assistant.io/integrations/workday/).
+from HomeAssistant
+
 ## 🖥️ Installation
 
 ### 🐳 Docker
