@@ -1,8 +1,5 @@
 name: Build and push Docker image
 
-env:
-    TAG: ${{ github.sha }}
-
 on:
   push:
     branches: [ main, dev ]
