@@ -2,12 +2,14 @@ name: Build and push Docker image
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ dev ]
   workflow_dispatch:
+  release:
+    types:
+      - created
 
 jobs:
   build:
-    name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
       - name: Get current date
@@ -27,5 +29,5 @@ jobs:
       - name: Build Docker image
         run: docker build -t ghcr.io/${{ github.repository }}:${{ steps.date.outputs.date }} .
 
-      #- name: Push Docker image
-      #  run: docker push ghcr.io/${{ github.repository }}:${{ steps.date.outputs.date }}
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ github.repository }}:${{ steps.date.outputs.date }}
