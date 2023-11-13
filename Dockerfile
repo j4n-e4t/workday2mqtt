@@ -1,6 +1,4 @@
 # Stage 1: Install dependencies
-LABEL org.opencontainers.image.source=https://github.com/j4n-e4t/workday2mqtt
-
 FROM python:3.8-slim as builder
 WORKDIR /workday2mqtt
 COPY . .
