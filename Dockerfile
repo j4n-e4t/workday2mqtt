@@ -1,27 +1,17 @@
-# Use the official Python image as the base image
-FROM python:3.8-slim
-
-# Set the working directory in the container
+# Stage 1: Install dependencies
+FROM python:3.8-slim as builder
 WORKDIR /workday2mqtt
-
-# Copy the application files to the container
 COPY . .
-
-# Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install cron and create log directory
+# Stage 2: Create final image
+FROM python:3.8-slim
+COPY --from=builder /workday2mqtt /workday2mqtt
+COPY --from=builder /usr/local /usr/local
+WORKDIR /workday2mqtt
 RUN apt-get update && apt-get install -y cron && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /var/log/cron
-
-# Give execution rights on the cron job
-RUN chmod 0644 /workday2mqtt/crontab
-
-# Apply cron job
-RUN crontab /workday2mqtt/crontab
-
-# Make entrypoint executable
-RUN chmod +x /workday2mqtt/entrypoint.sh
-
-# Command to run cron job and keep the container running
-ENTRYPOINT "/workday2mqtt/entrypoint.sh"
+    && mkdir -p /var/log/cron \
+    && chmod 0644 /workday2mqtt/crontab \
+    && crontab /workday2mqtt/crontab \
+    && chmod +x /workday2mqtt/entrypoint.sh
+ENTRYPOINT ["/workday2mqtt/entrypoint.sh"]

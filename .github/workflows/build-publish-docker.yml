@@ -1,0 +1,33 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    TAG: ${{ steps.date.outputs.date }}
+
+
+
+jobs:
+  build:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $TAG
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action
+        with:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.repository }}:${{ env.tag }} .
+
+      #- name: Push Docker image
+      #  run: docker push ghcr.io/${{ github.repository }}:${{ env.tag }}
