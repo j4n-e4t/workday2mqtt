@@ -12,7 +12,7 @@ from HomeAssistant
 3. Run the container
     
     ```bash
-    docker run -d --name workday2mqtt -v ./config.json:/workday2mqtt/config.json --restart unless-stopped j4n-e4t/workday2mqtt:latest
+    docker run -d --name workday2mqtt -v ./config.json:/workday2mqtt/config.json --restart unless-stopped j4n-e4t/workday2mqtt:<current_release_tag>
     ```
 
 ### 🐍 Python Script
