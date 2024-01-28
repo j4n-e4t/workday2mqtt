@@ -1,2 +1,2 @@
-holidays~=0.37
+holidays~=0.41
 paho-mqtt~=1.6.1
